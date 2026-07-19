@@ -1,8 +1,8 @@
 # One's Mind Re-Engineered
 
-Re-engineering is fascinating, it offers us the opportunity to optimize things. It challenges the mind, which sees additional doors in front of it, doors it can choose to open and venture through. Behind these doors, material worlds extend far beyond, manipulable through digital access. Worlds that, over time, have sometimes fallen into oblivion, lying dormant, awaiting the next electron, a curious spark hungry for optimization.
+Re-engineering is fascinating, it offers us the opportunity to optimize things. It challenges the mind, which sees additional doors in front of it, doors it can choose to open and venture through. Behind these doors, material worlds extend far beyond, manipulable through digital access. Worlds that sometimes fade into oblivion, waiting for the next spark to ignite their hunger for optimization.
 
-Optimization isn't just about reducing, it's actually about solving the maximum with the least. These are solutions that, by their very essence, express themselves across several layers of a global system, unburdened by unnecessary complexity. It does matter, because it brings these old technologies back to light, breathing life into the hardware until it reaches the fullest of its potential.
+Optimization isn't just about reducing, it's actually about solving the maximum with the least. These are solutions that, by their very essence, transcend unnecessary complexity and express themselves across multiple layers. Optimization does matter, because it brings old technologies back into the light, breathing new life into the hardware and unlocking its full potential.
 
 Optimization through re-engineering is the idea that hardware evolution is not a barrier to the evolution or birth of a software solution. Even so, for this to make sense, one must also understand the capabilities and limits of the physical resource.
 
