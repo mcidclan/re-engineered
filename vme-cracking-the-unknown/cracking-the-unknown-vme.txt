@@ -1,0 +1,171 @@
+Cracking the Unknown: The Quest for the VME
+
+
+Hi, I'm m-cid a developer from France.
+
+
+  In January 2026 I started the 'psp-media-engine-cracking-the-unknown' project
+where the main purpose was to figure out how the Sony Virtual Mobile Engine 2
+works. Basically no public resources existed on that subject so I had to go
+through reverse engineering to list the hardware registers related to the VME.
+Most of the work was then done through trial and error relying on feedback from
+the device itself. I had to formulate many hypotheses in order to validate or
+invalidate them then build new hypotheses until things became clearer.
+
+see https://github.com/mcidclan/psp-media-engine-cracking-the-unknown
+
+  Actually Sony had released a bit of information about the hardware specs which
+let us understand that it was a reconfigurable vector engine chip, coarse grain
+heterogeneous type capable of reconfiguring on the fly. This is actually quite
+close to what a small academic CGRA could be. So I decided to explore that
+possibility and dig into how CGRAs work.
+
+After some dump sessions I discovered a sort of bitstream with recognizable
+patterns present in the media engine's eDRAM. At the time I had no idea what it
+really was or why it was structured that way and most of what I extracted from
+the eDRAM turned out to be incomplete.
+
+
+  Over time I progressively managed to get feedback from the VME while data was
+being processed over the scratchpad. The first real feedback came from a bad
+configuration where the VME never returned correctly and where I ended up
+bypassing the finish sync status checks of the VME to let the Media Engine
+continue running in parallel with it. It wasn't easy to get there but it was
+fun. It just took time as I slowly got familiar with the hardware, something
+that, like anything else, you end up understanding better the more time and
+energy you invest in it.
+
+In the end other elements such as the Address Generator Units, the Interconnect,
+the Functional Units, and the Context Memory Config previously thought to be a
+bitstream, along with the notion of the datapath itself, became clearer to me.
+The takeaway is that understanding how a VME pipeline works based on what I
+discovered isn't that hard.
+
+
+  Some of you might have thought the Virtual Mobile Engine was designed just for
+audio but that's not true, at least not for the VME2 which is the one integrated
+into our PSPs.
+
+The VME clearly has functional opcodes designed for other things like decoding
+and image processing. For example we have "sum of absolute differences" which
+enables motion estimation, "XOR parity" for integrity checks, "64-bit binary
+rotation" and "absolute difference / absolute sum" for edge detection. Those
+operations have no real direct purpose in pure audio processing.
+
+Additionally the VME has generic ALUs (including logical operations) which allow
+us to process any sort of data.
+
+The fact that the VME is not only designed for audio and could be used for other
+processing tasks is not a hypothetical claim. Indeed sample code making use of
+it for fields like image processing, AI neural networks, vector transformations
+and FFT implementation which are used in many fields has already seen the light
+of day.
+
+If you want to take advantage of it in your homebrew games, apps, or game ports
+you just need to keep in mind that it does have its limitations.
+
+
+  The Media Engine communicates with the VME through 4 known ways.
+
+The main one is via the dedicated memory context configuration which is in fact
+a number of hardware registers accessible as MMIO. The known range is from
+0x440f8000 to 0x440f81a4, inclusive. The memory context configuration is an
+interface that serves to dynamically update the VME datapath.
+
+On the other hand there is a second way to send the configuration over the
+datapath, this time a configuration saved into RAM or local eDRAM, which will be
+sent via the dedicated DMAC to the VME.
+
+Then we have another way to communicate with the VME, this time to send or
+retrieve data to and from it. There is indeed a scratchpad shared between the ME
+and the VME. It has the particularity that each data word is 24-bit packed into
+a 32-bit word where the 8 higher bits reflect the value of bit 23. Data
+transfers can be done using the MMIO which is based at 0x440ff000. Transfer over
+the scratchpad can also be done using the local DMAC where the external memory
+can be either RAM or local ME eDRAM as well.
+
+The scratchpad format puts a real constraint to consider when implementing a
+solution to be handled by the VME. Depending on what you want to achieve you'll
+have to pick the right input and output format since the VME operates in fixed
+point.
+
+But the range of applications is huge and you don't have to limit your mind to
+classical implementations. You don't have to try to directly port your scalar or
+SIMD implementation onto it. You need to think about how the VME could handle it
+on its own.
+
+The VME works as a multi-stream engine where each conceptual Processing Element
+(PE) is composed of 2 physical functional units (FUs) that can each have their
+own Address Generation Unit (AGU) and can run in series or in parallel. This
+means we can have 8 functional units processing 8 pairs of streams in series or
+in parallel.
+
+According to early specifications that we could find on the internet, the VME is
+clocked at a max clock frequency of 166MHz with a throughput of 5 Giga Ops/sec
+giving us a number of around 30 operations per cycle which is non-negligible.
+
+We now have some sample code that can help with implementing VME pipelines. As
+proof of this, the VME has since started to be integrated into some homebrew
+projects such as ports of N64 games like Ocarina of Time and, more recently,
+Star Fox 64, for example.
+
+That said do not hesitate to take a look at those GitHub links:
+https://github.com/mcidclan/psp-virtual-mobile-engine-ext
+https://github.com/mcidclan/psp-media-engine-custom-core/blob/main/vme-lib.c
+and join us with new ideas to integrate the VME into homebrew projects.
+
+
+  Additionally, to give you more visibility, here's a simplified view of how data
+moves through the VME datapath, from host memory to the functional units and
+back:
+
+
+                    HOST MEMORY
+                   /            \
+                  /              \
+           via DMAC          via MMIO
+                  \              /
+                   \            /
+              CONTEXT MEMORY CONFIG
+                        |
+                        v
+           ADDRESS GENERATOR + DATAPATH
+                        |
+                        v
+        +-------------------------------+
+        |  front 0   front 1   ...      |
+        |     \         \               |
+        |      \         \              |
+        |  back 0   back 1   ...        |
+        |     \         \               |
+        |      \         \              |
+        |      +-----------+            |
+        |      |    MUX    |  ...       |
+        |      +-----------+            |
+        |            |                  |
+        |            v                  |
+        |      +----------+             |
+        |      |    FU    |  ...        |
+        |      |   Acc    |             |
+        |      +----------+             |
+        |            |                  |
+        +------------|------------------+
+                      v
+              staging result 0, 1, ...
+                        |
+                        v
+                  STAGING MEMORY
+                        ^
+                        |
+                        v
+                    SCRATCHPAD
+                        |
+                        v
+                    HOST MEMORY
+
+  As for me I'm slowly moving toward the second part of Cracking the Unknown: the
+H.264 decoder that sits alongside the media engine and the VME. Some obscure
+parts of the hardware we once thought belonged to the VME are, in fact, starting
+to be confirmed as part of the H.264 decoder as they're beginning to give
+feedback of their own. Who knows, after cracking the VME, the H.264 decoder
+might be next.
