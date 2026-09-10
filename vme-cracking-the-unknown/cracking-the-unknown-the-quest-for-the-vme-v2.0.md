@@ -95,4 +95,10 @@ Additionally, to give you more visibility, here's a simplified view of how data 
                   HOST MEMORY
 ```
 
+
+## What's Next: The Quest for the H.264 Decoder
+
+As for me, I'm slowly moving toward the second part of Cracking the Unknown: the H.264 decoder that sits alongside the media engine and the VME. Some obscure parts of the hardware we once thought belonged to the VME are, in fact, starting to be confirmed as part of the H.264 decoder as they're beginning to give feedback of their own. Who knows, after cracking the VME, the H.264 decoder might be next.
+
+
 Thanks for reading, m-cid.
