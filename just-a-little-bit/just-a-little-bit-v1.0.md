@@ -1,4 +1,8 @@
-## Hey Hi! I'm Not AI - Just a Little "Bit"
+# Just a Little "Bit"
+
+*version 1.0*
+
+## Hey Hi! I'm Not AI
 
 Dear readers, now I have to speak to you in a specific style, so as not to be confused with an AI. Some will understand, others will ask: why? It is just me, thinking out loud, reclining under the stars.
 
