@@ -1,10 +1,10 @@
 # Just a Little "Bit"
 
-*version 1.0*
+*version 1.0 - 20 Nov 2026*
 
 ## Hey Hi! I'm Not AI
 
-Dear readers, now I have to speak to you in a specific style, so as not to be confused with an AI. Some will understand, others will ask: why? It is just me, thinking out loud, reclining under the stars.
+Dear readers, now I have to speak to you in a specific style, so as not to be confused with an AI. Some will understand, others will ask: why? It is just me, thinking out loud under the stars.
 
 Anyway, tell me:
 
@@ -20,7 +20,7 @@ The words are many, waiting for the word to get through the PEs. Those Processin
 
 Wait wait wait!
 
-That's... a bit too much. But is that okay? I mean, am I enough of a non-AI? Or do I sound a little bit high? Which would be better than sounding AI, I guess? AI as Artificially Intelligent? Or maybe Inelegant? As you prefer, mes chers.
+That's... a bit too much. But is that okay? I mean, am I enough of a non-AI? Or do I sound a little bit high?
 
 ## Designing the Bits
 
