@@ -1,3 +1,5 @@
+## Hey Hi! I'm Not AI - Just a Little "Bit"
+
 Dear readers, now I have to speak to you in a specific style, so as not to be confused with an AI. Some will understand, others will ask: why? It is just me, thinking out loud, reclining under the stars.
 
 Anyway, tell me:
@@ -16,6 +18,8 @@ Wait wait wait!
 
 That's... a bit too much. But is that okay? I mean, am I enough of a non-AI? Or do I sound a little bit high? Which would be better than sounding AI, I guess? AI as Artificially Intelligent? Or maybe Inelegant? As you prefer, mes chers.
 
+## Designing the Bits
+
 Back to the subject.
 
 There is that bit, an annoying bit which should be managed. What do we call it again? Ah yes, the carry bit! Not that one? Then carry, out! The other one, and carry-in? Breathe in. So no. Yes, but no native arithmetic operations, even though the VME supports most of them. It cannot divide? Shift it to a Q-machine and get a different vibe, or if you can, just shift. But for now, it's time for a challenging exercise in which we'll care only about a few logicals.
@@ -29,6 +33,7 @@ Hold your pens and take some notes. Indeed, you should know that VMEG has a doc:
 To clarify, VMEG is a language that makes VME kernels easier to engage. More details on it further down the page. The VME has 4 physical Processing Elements, each containing 2 Functional Units. It would suit our use case perfectly well, indeed. In fact, it is exactly what we need, but I realize this will be way too long. So... hey! Forget about the circuit and delay the multiplication!
 
 Take a look at what we're focusing on:
+
 ```
   0011
 + 1010
@@ -40,11 +45,13 @@ You can't see it? Please enter and take a seat. If we keep our eyes on the board
 But again, we're not using the Addition because it would make things way less challenging. AI would use addition, because it doesn't feel what a challenge is. We need to AND the operands, and SHIFT to carry out. Keep the carry-in bits in hand, XOR again, and repeat until we get zero at the end.
 
 Here is the main stage of the pipeline:
+
 ```
         0011
     XOR 1010
       = 1001
 ```
+
 ```
         0011
     AND 1010
@@ -79,6 +86,8 @@ As an example, this is how our pipeline could have been represented:
   }
 }
 ```
+
+## Crafting with Bits
 
 This is called VMEG, the same one we spoke about too early. It is then transpiled into C or Cpp, by... VMEGC. Amazing, isn't it? I wanted you to open your editors, not... 'Claude as editor', to write the code above, but...
 
@@ -116,6 +125,8 @@ You'll tell me, okay, we're using the VME, but is that all? A logical addition, 
 Do I take all of this too seriously? Hmm... maybe. Just a little bit. But in case you're missing the time when good articles emerged from the scene, let me say... please write one! And if my article made you feel as though you missed that time, then, my bad!
 
 m-cid.
+
+## Thinkering a Little Bit
 
 This article is a sort of techno-poetic essay, a way to say that most of the contributors who remain on the scene give their spare time, driven by their motivation and the fun they get out of it. And that even without AI, a result can be rough, because the line is thin these days... don't you see? But let me clarify that I'm not fighting AI, and I'm not fighting those who are against it either. As long as the human behind the work can still express themselves, by letting AI carry the tasks we have mastered, or that save time... we can grow and learn more as humans.
 
