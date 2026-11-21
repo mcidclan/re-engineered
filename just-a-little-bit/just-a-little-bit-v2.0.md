@@ -1,4 +1,4 @@
-# Just a Little "Bit" from the PSP Scene
+# Just a Little "Bit"
 
 *version 2.0 - 21 Nov 2026*
 
@@ -38,7 +38,7 @@ Not yet!
 
 Hold your pens and take some notes. Indeed, you should know that VMEG has a doc: something we can refer to when we're blocked. And... it does explain, how to loop through and around a block. I think I just dropped a quote before the boat was set afloat. Hope this is not a flop, at least you can't call it a slop!
 
-To clarify, VMEG is a language that makes VME kernels easier to engage. More details on it further down the page. The VME has 4 Structural Processing Elements, each containing 2 physical Functional Units. It would suit our use case perfectly well, indeed. In fact, it is exactly what we need, but I realize this will be way too long. So... hey! Forget about the circuit and delay the multiplication!
+To clarify, VMEG is a language that makes VME kernels easier to engage. More details on it further down the page. The VME has 4 structural Processing Elements, each containing 2 physical Functional Units. It would suit our use case perfectly well, indeed. In fact, it is exactly what we need, but I realize this will be way too long. So... hey! Forget about the circuit and delay the multiplication!
 
 Take a look at what we're focusing on:
 
@@ -141,7 +141,7 @@ m-cid.
 Oh yeah, thanks for reading! And I forgot to say that the toolkit has recently been updated!
 
 - We now have 8-PE kernel support, using a hybrid approach that relies on some of the hardware particularities. Two groups of 4 parallel PEs are chained in series, with the inputs and outputs of all 8 PEs still reserved independently. This chaining takes advantage of the config memory shadow register and of the interconnect splitting mode.
-- Additionally, we now have a new kernel type called "pipeline", which takes streams as input and processes them from top to bottom. It is what we used for writing our previous Kernel, and here, as you can see, there is no concept of PEs. The AGUs are automatically configured by VMEG. The pipeline accepts a flow of operations going downward with practically no limit.
+- Additionally, we now have the new kernel type called "pipeline", which takes streams as input and processes them from top to bottom. It is what we used for writing our previous Kernel, and here, as you can see, there is no concept of PEs. The AGUs are automatically configured by VMEG. The pipeline accepts a flow of operations going downward with practically no limit.
 
 I invite you to take a look at the full sample code related to this article, as well as the vme2-next-level toolkit project and the cracking-the-unknown project to get a broader view of the subject:
 
